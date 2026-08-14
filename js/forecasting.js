@@ -4,7 +4,7 @@
  * 9-Year Epicycle Progress, and 12-Month Transit Roadmaps.
  */
 
-import { reduceNumber, sumDigits } from "./numerology.js";
+import { reduceNumber, sumDigits, parseFlexibleDate } from "./numerology.js";
 import { PERSONAL_YEARS_DATA, CORE_NUMBERS_DATA } from "./data/interpretations.js";
 
 const MONTH_NAMES = [
@@ -16,14 +16,8 @@ const MONTH_NAMES = [
  * Calculate Personal Year, Personal Month, and Personal Day
  */
 export function calculatePersonalCycles(birthDateStr, forecastDateStr) {
-  const [, bMonthStr, bDayStr] = birthDateStr.split("-");
-  const bMonth = parseInt(bMonthStr, 10);
-  const bDay = parseInt(bDayStr, 10);
-
-  const [fYearStr, fMonthStr, fDayStr] = forecastDateStr.split("-");
-  const fYear = parseInt(fYearStr, 10);
-  const fMonth = parseInt(fMonthStr, 10);
-  const fDay = parseInt(fDayStr, 10);
+  const { month: bMonth, day: bDay } = parseFlexibleDate(birthDateStr);
+  const { year: fYear, month: fMonth, day: fDay, iso: fIso } = parseFlexibleDate(forecastDateStr || "2026-08-13");
 
   // Universal Calculations
   const universalYearRed = reduceNumber(fYear);

@@ -107,9 +107,9 @@
           <div class="form-group">
             <label for="input-birth-date">
               Full Birth Date
-              <span class="hint">Month, Day, Year</span>
+              <span class="hint">Type YYYY-MM-DD or MM/DD/YYYY</span>
             </label>
-            <input type="date" id="input-birth-date" class="form-control" required value="1990-07-15">
+            <input type="text" id="input-birth-date" class="form-control" required placeholder="e.g. 1990-07-15 or 07/15/1990" value="1990-07-15" autocomplete="off">
           </div>
 
           <!-- Birth Time & Place -->
@@ -118,9 +118,9 @@
               <div>
                 <label for="input-birth-time">
                   Birth Time
-                  <span class="hint">Exact / HH:MM</span>
+                  <span class="hint">Exact / HH:MM or 2:30 PM</span>
                 </label>
-                <input type="time" id="input-birth-time" class="form-control" value="14:30">
+                <input type="text" id="input-birth-time" class="form-control" placeholder="e.g. 14:30 or 2:30 PM" value="14:30" autocomplete="off">
               </div>
               <div>
                 <label for="input-birth-place">
@@ -155,9 +155,9 @@
               <div>
                 <label for="input-forecast-date">
                   Target Forecast Date
-                  <span class="hint">Year, Month, Day</span>
+                  <span class="hint">Type YYYY-MM-DD or MM/DD/YYYY</span>
                 </label>
-                <input type="date" id="input-forecast-date" class="form-control" value="2026-08-13">
+                <input type="text" id="input-forecast-date" class="form-control" placeholder="e.g. 2026-08-13 or 08/13/2026" value="2026-08-13" autocomplete="off">
               </div>
             </div>
           </div>
@@ -562,7 +562,7 @@
             </div>
             <div class="form-group">
               <label for="compat-partner-date">Partner Birth Date</label>
-              <input type="date" id="compat-partner-date" class="form-control" value="1992-11-24">
+              <input type="text" id="compat-partner-date" class="form-control" placeholder="e.g. 1992-11-24 or 11/24/1992" value="1992-11-24" autocomplete="off">
             </div>
           </div>
           <div style="margin-top: 1.25rem; text-align: right;">

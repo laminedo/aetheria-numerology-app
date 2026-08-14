@@ -1610,12 +1610,13 @@ function openFormulaInspector(type) {
   if (type === "lifePath") {
     title = "Life Path Number • Step-by-Step Reduction";
     const lp = bp.core.lifePath;
+    const bParsed = parseFlexibleDate(bp.birthDate);
     html = '<h3>' + title + '</h3>' +
       '<p style="margin-bottom: 1rem;">Calculated by reducing Birth Month, Day, and Year separately, then summing their core vibrations.</p>' +
       '<div style="background: var(--bg-input); padding: 1rem; border-radius: var(--radius-md); font-family: monospace; font-size: 0.95rem; margin-bottom: 1rem;">' +
-        '<div><strong>1. Month (' + bp.birthDate.split("-")[1] + '):</strong> Reduced to ➔ <strong>' + lp.monthRed.value + '</strong></div>' +
-        '<div><strong>2. Day (' + bp.birthDate.split("-")[2] + '):</strong> Reduced to ➔ <strong>' + lp.dayRed.value + '</strong></div>' +
-        '<div><strong>3. Year (' + bp.birthDate.split("-")[0] + '):</strong> Reduced to ➔ <strong>' + lp.yearRed.value + '</strong></div>' +
+        '<div><strong>1. Month (' + bParsed.month + '):</strong> Reduced to ➔ <strong>' + lp.monthRed.value + '</strong></div>' +
+        '<div><strong>2. Day (' + bParsed.day + '):</strong> Reduced to ➔ <strong>' + lp.dayRed.value + '</strong></div>' +
+        '<div><strong>3. Year (' + bParsed.year + '):</strong> Reduced to ➔ <strong>' + lp.yearRed.value + '</strong></div>' +
         '<div style="margin-top: 0.5rem; border-top: 1px dashed var(--border-subtle); padding-top: 0.5rem;">' +
           '<strong>Total Sum:</strong> ' + lp.monthRed.value + ' + ' + lp.dayRed.value + ' + ' + lp.yearRed.value + ' = <strong>' + lp.componentSum + '</strong>' +
         '</div>' +

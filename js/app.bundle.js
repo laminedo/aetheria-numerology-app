@@ -1473,14 +1473,64 @@ function analyzeNameLetters(name, system = "pythagorean") {
 }
 
 /**
+ * Flexible date parser that accepts YYYY-MM-DD, MM/DD/YYYY, MM-DD-YYYY, or textual dates like "July 15, 1990"
+ */
+function parseFlexibleDate(dateStr) {
+  if (!dateStr) return { year: 1990, month: 7, day: 15, iso: "1990-07-15" };
+  const s = String(dateStr).trim();
+
+  // 1. YYYY-MM-DD, YYYY/MM/DD, YYYY.MM.DD
+  let match = s.match(/^(\d{4})[-\/\.](\d{1,2})[-\/\.](\d{1,2})$/);
+  if (match) {
+    const year = parseInt(match[1], 10);
+    const month = Math.min(12, Math.max(1, parseInt(match[2], 10)));
+    const day = Math.min(31, Math.max(1, parseInt(match[3], 10)));
+    const iso = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    return { year, month, day, iso };
+  }
+
+  // 2. MM/DD/YYYY, MM-DD-YYYY, MM.DD.YYYY
+  match = s.match(/^(\d{1,2})[-\/\.](\d{1,2})[-\/\.](\d{4})$/);
+  if (match) {
+    const month = Math.min(12, Math.max(1, parseInt(match[1], 10)));
+    const day = Math.min(31, Math.max(1, parseInt(match[2], 10)));
+    const year = parseInt(match[3], 10);
+    const iso = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    return { year, month, day, iso };
+  }
+
+  // 3. Named textual date e.g. "January 5, 1974" or "July 15 1990"
+  const parsedTs = Date.parse(s);
+  if (!isNaN(parsedTs)) {
+    const dt = new Date(parsedTs);
+    const year = dt.getUTCFullYear();
+    const month = dt.getUTCMonth() + 1;
+    const day = dt.getUTCDate();
+    const iso = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    return { year, month, day, iso };
+  }
+
+  // 4. Fallback: extract digits
+  const digits = s.match(/\d+/g);
+  if (digits && digits.length >= 3) {
+    let yearStr = digits.find(d => d.length === 4);
+    if (!yearStr) yearStr = digits[2];
+    const rem = digits.filter((_, i) => digits[i] !== yearStr);
+    const month = Math.min(12, Math.max(1, parseInt(rem[0] || "1", 10)));
+    const day = Math.min(31, Math.max(1, parseInt(rem[1] || "15", 10)));
+    const year = parseInt(yearStr || "1990", 10);
+    const iso = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    return { year, month, day, iso };
+  }
+
+  return { year: 1990, month: 7, day: 15, iso: "1990-07-15" };
+}
+
+/**
  * Calculate Life Path Number with full reduction path
  */
 function calculateLifePath(birthDateStr) {
-  // birthDateStr in YYYY-MM-DD
-  const [yearStr, monthStr, dayStr] = birthDateStr.split("-");
-  const year = parseInt(yearStr, 10);
-  const month = parseInt(monthStr, 10);
-  const day = parseInt(dayStr, 10);
+  const { year, month, day } = parseFlexibleDate(birthDateStr);
 
   // Method 1: Component reduction (standard esoteric Pythagorean method)
   const monthRed = reduceNumber(month);
@@ -1575,8 +1625,7 @@ function calculateNameNumbers(name, system = "pythagorean") {
  * Calculate Birthday Number
  */
 function calculateBirthdayNumber(birthDateStr) {
-  const [, , dayStr] = birthDateStr.split("-");
-  const day = parseInt(dayStr, 10);
+  const { day } = parseFlexibleDate(birthDateStr);
   const red = reduceNumber(day);
   const isKarmic = KARMIC_NUMBERS.includes(day);
 
@@ -1607,9 +1656,7 @@ function calculateMaturityNumber(lifePathVal, destinyVal) {
  * Calculate Attitude / Sun Number (Month + Day)
  */
 function calculateAttitudeNumber(birthDateStr) {
-  const [, monthStr, dayStr] = birthDateStr.split("-");
-  const month = parseInt(monthStr, 10);
-  const day = parseInt(dayStr, 10);
+  const { month, day } = parseFlexibleDate(birthDateStr);
   const sum = month + day;
   const red = reduceNumber(sum, false); // Attitude is traditionally 1-9
   return {
@@ -1650,10 +1697,10 @@ function calculateBalanceNumber(name, system = "pythagorean") {
  * Calculate the 4 Challenge Numbers
  */
 function calculateChallengeNumbers(birthDateStr) {
-  const [yearStr, monthStr, dayStr] = birthDateStr.split("-");
-  const month = reduceNumber(parseInt(monthStr, 10), false).value;
-  const day = reduceNumber(parseInt(dayStr, 10), false).value;
-  const year = reduceNumber(parseInt(yearStr, 10), false).value;
+  const { year: yrNum, month: moNum, day: dyNum } = parseFlexibleDate(birthDateStr);
+  const month = reduceNumber(moNum, false).value;
+  const day = reduceNumber(dyNum, false).value;
+  const year = reduceNumber(yrNum, false).value;
 
   const challenge1 = Math.abs(month - day);
   const challenge2 = Math.abs(day - year);
@@ -1672,10 +1719,10 @@ function calculateChallengeNumbers(birthDateStr) {
  * Calculate the 4 Pinnacle Cycles & Age Brackets
  */
 function calculatePinnacles(birthDateStr, lifePathBase) {
-  const [yearStr, monthStr, dayStr] = birthDateStr.split("-");
-  const month = reduceNumber(parseInt(monthStr, 10), false).value;
-  const day = reduceNumber(parseInt(dayStr, 10), false).value;
-  const year = reduceNumber(parseInt(yearStr, 10), false).value;
+  const { year: yrNum, month: moNum, day: dyNum } = parseFlexibleDate(birthDateStr);
+  const month = reduceNumber(moNum, false).value;
+  const day = reduceNumber(dyNum, false).value;
+  const year = reduceNumber(yrNum, false).value;
 
   const p1 = reduceNumber(month + day).value;
   const p2 = reduceNumber(day + year).value;
@@ -1773,6 +1820,7 @@ function calculateFullBlueprint({
 
 
 
+
 const ZODIAC_SIGNS = [
   { name: "Aries", symbol: "♈", element: "Fire", modality: "Cardinal", ruler: "Mars", start: [3, 21], end: [4, 19], degreeOffset: 0 },
   { name: "Taurus", symbol: "♉", element: "Earth", modality: "Fixed", ruler: "Venus", start: [4, 20], end: [5, 20], degreeOffset: 30 },
@@ -1821,9 +1869,7 @@ function calculateJulianDay(year, month, day, decimalHours = 12) {
  * Determine Sun Sign based on birth month and day
  */
 function calculateSunSign(birthDateStr) {
-  const [, monthStr, dayStr] = birthDateStr.split("-");
-  const month = parseInt(monthStr, 10);
-  const day = parseInt(dayStr, 10);
+  const { month, day } = parseFlexibleDate(birthDateStr);
 
   for (const sign of ZODIAC_SIGNS) {
     const [sM, sD] = sign.start;
@@ -1990,14 +2036,11 @@ function calculateElementalBalance(sunSign, moonData, ascendantData, numerologyP
  * Generate Complete Astrological Profile
  */
 function calculateAstrologyProfile(birthDateStr, birthTimeStr, birthPlaceStr, numerologyProfile) {
-  const [yearStr, monthStr, dayStr] = birthDateStr.split("-");
-  const year = parseInt(yearStr, 10);
-  const month = parseInt(monthStr, 10);
-  const day = parseInt(dayStr, 10);
+  const { year, month, day, iso } = parseFlexibleDate(birthDateStr);
 
-  const sunSign = calculateSunSign(birthDateStr);
+  const sunSign = calculateSunSign(iso);
   const moonData = calculateMoonSign(year, month, day);
-  const ascendantData = calculateAscendant(birthDateStr, birthTimeStr, birthPlaceStr);
+  const ascendantData = calculateAscendant(iso, birthTimeStr, birthPlaceStr);
   const elemental = calculateElementalBalance(sunSign, moonData, ascendantData, numerologyProfile);
 
   return {
@@ -2265,10 +2308,7 @@ function calculateBridgeNumbers(lifePathVal, destinyVal, soulUrgeVal, personalit
  * Calculate the Three Major Life Period Cycles (Epochs)
  */
 function calculateThreeLifePeriods(birthDateStr, lifePathVal) {
-  const [yearStr, monthStr, dayStr] = birthDateStr.split("-");
-  const month = parseInt(monthStr, 10);
-  const day = parseInt(dayStr, 10);
-  const year = parseInt(yearStr, 10);
+  const { year, month, day } = parseFlexibleDate(birthDateStr);
 
   const p1 = reduceNumber(month).value; // 1st Period: Month
   const p2 = reduceNumber(day).value;   // 2nd Period: Day
@@ -3110,14 +3150,8 @@ const MONTH_NAMES = [
  * Calculate Personal Year, Personal Month, and Personal Day
  */
 function calculatePersonalCycles(birthDateStr, forecastDateStr) {
-  const [, bMonthStr, bDayStr] = birthDateStr.split("-");
-  const bMonth = parseInt(bMonthStr, 10);
-  const bDay = parseInt(bDayStr, 10);
-
-  const [fYearStr, fMonthStr, fDayStr] = forecastDateStr.split("-");
-  const fYear = parseInt(fYearStr, 10);
-  const fMonth = parseInt(fMonthStr, 10);
-  const fDay = parseInt(fDayStr, 10);
+  const { month: bMonth, day: bDay } = parseFlexibleDate(birthDateStr);
+  const { year: fYear, month: fMonth, day: fDay, iso: fIso } = parseFlexibleDate(forecastDateStr || "2026-08-13");
 
   // Universal Calculations
   const universalYearRed = reduceNumber(fYear);
@@ -4983,12 +5017,13 @@ function openFormulaInspector(type) {
   if (type === "lifePath") {
     title = "Life Path Number • Step-by-Step Reduction";
     const lp = bp.core.lifePath;
+    const bParsed = parseFlexibleDate(bp.birthDate);
     html = '<h3>' + title + '</h3>' +
       '<p style="margin-bottom: 1rem;">Calculated by reducing Birth Month, Day, and Year separately, then summing their core vibrations.</p>' +
       '<div style="background: var(--bg-input); padding: 1rem; border-radius: var(--radius-md); font-family: monospace; font-size: 0.95rem; margin-bottom: 1rem;">' +
-        '<div><strong>1. Month (' + bp.birthDate.split("-")[1] + '):</strong> Reduced to ➔ <strong>' + lp.monthRed.value + '</strong></div>' +
-        '<div><strong>2. Day (' + bp.birthDate.split("-")[2] + '):</strong> Reduced to ➔ <strong>' + lp.dayRed.value + '</strong></div>' +
-        '<div><strong>3. Year (' + bp.birthDate.split("-")[0] + '):</strong> Reduced to ➔ <strong>' + lp.yearRed.value + '</strong></div>' +
+        '<div><strong>1. Month (' + bParsed.month + '):</strong> Reduced to ➔ <strong>' + lp.monthRed.value + '</strong></div>' +
+        '<div><strong>2. Day (' + bParsed.day + '):</strong> Reduced to ➔ <strong>' + lp.dayRed.value + '</strong></div>' +
+        '<div><strong>3. Year (' + bParsed.year + '):</strong> Reduced to ➔ <strong>' + lp.yearRed.value + '</strong></div>' +
         '<div style="margin-top: 0.5rem; border-top: 1px dashed var(--border-subtle); padding-top: 0.5rem;">' +
           '<strong>Total Sum:</strong> ' + lp.monthRed.value + ' + ' + lp.dayRed.value + ' + ' + lp.yearRed.value + ' = <strong>' + lp.componentSum + '</strong>' +
         '</div>' +

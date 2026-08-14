@@ -147,14 +147,64 @@ export function analyzeNameLetters(name, system = "pythagorean") {
 }
 
 /**
+ * Flexible date parser that accepts YYYY-MM-DD, MM/DD/YYYY, MM-DD-YYYY, or textual dates like "July 15, 1990"
+ */
+export function parseFlexibleDate(dateStr) {
+  if (!dateStr) return { year: 1990, month: 7, day: 15, iso: "1990-07-15" };
+  const s = String(dateStr).trim();
+
+  // 1. YYYY-MM-DD, YYYY/MM/DD, YYYY.MM.DD
+  let match = s.match(/^(\d{4})[-\/\.](\d{1,2})[-\/\.](\d{1,2})$/);
+  if (match) {
+    const year = parseInt(match[1], 10);
+    const month = Math.min(12, Math.max(1, parseInt(match[2], 10)));
+    const day = Math.min(31, Math.max(1, parseInt(match[3], 10)));
+    const iso = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    return { year, month, day, iso };
+  }
+
+  // 2. MM/DD/YYYY, MM-DD-YYYY, MM.DD.YYYY
+  match = s.match(/^(\d{1,2})[-\/\.](\d{1,2})[-\/\.](\d{4})$/);
+  if (match) {
+    const month = Math.min(12, Math.max(1, parseInt(match[1], 10)));
+    const day = Math.min(31, Math.max(1, parseInt(match[2], 10)));
+    const year = parseInt(match[3], 10);
+    const iso = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    return { year, month, day, iso };
+  }
+
+  // 3. Named textual date e.g. "January 5, 1974" or "July 15 1990"
+  const parsedTs = Date.parse(s);
+  if (!isNaN(parsedTs)) {
+    const dt = new Date(parsedTs);
+    const year = dt.getUTCFullYear();
+    const month = dt.getUTCMonth() + 1;
+    const day = dt.getUTCDate();
+    const iso = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    return { year, month, day, iso };
+  }
+
+  // 4. Fallback: extract digits
+  const digits = s.match(/\d+/g);
+  if (digits && digits.length >= 3) {
+    let yearStr = digits.find(d => d.length === 4);
+    if (!yearStr) yearStr = digits[2];
+    const rem = digits.filter((_, i) => digits[i] !== yearStr);
+    const month = Math.min(12, Math.max(1, parseInt(rem[0] || "1", 10)));
+    const day = Math.min(31, Math.max(1, parseInt(rem[1] || "15", 10)));
+    const year = parseInt(yearStr || "1990", 10);
+    const iso = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    return { year, month, day, iso };
+  }
+
+  return { year: 1990, month: 7, day: 15, iso: "1990-07-15" };
+}
+
+/**
  * Calculate Life Path Number with full reduction path
  */
 export function calculateLifePath(birthDateStr) {
-  // birthDateStr in YYYY-MM-DD
-  const [yearStr, monthStr, dayStr] = birthDateStr.split("-");
-  const year = parseInt(yearStr, 10);
-  const month = parseInt(monthStr, 10);
-  const day = parseInt(dayStr, 10);
+  const { year, month, day } = parseFlexibleDate(birthDateStr);
 
   // Method 1: Component reduction (standard esoteric Pythagorean method)
   const monthRed = reduceNumber(month);
@@ -249,8 +299,7 @@ export function calculateNameNumbers(name, system = "pythagorean") {
  * Calculate Birthday Number
  */
 export function calculateBirthdayNumber(birthDateStr) {
-  const [, , dayStr] = birthDateStr.split("-");
-  const day = parseInt(dayStr, 10);
+  const { day } = parseFlexibleDate(birthDateStr);
   const red = reduceNumber(day);
   const isKarmic = KARMIC_NUMBERS.includes(day);
 
@@ -281,9 +330,7 @@ export function calculateMaturityNumber(lifePathVal, destinyVal) {
  * Calculate Attitude / Sun Number (Month + Day)
  */
 export function calculateAttitudeNumber(birthDateStr) {
-  const [, monthStr, dayStr] = birthDateStr.split("-");
-  const month = parseInt(monthStr, 10);
-  const day = parseInt(dayStr, 10);
+  const { month, day } = parseFlexibleDate(birthDateStr);
   const sum = month + day;
   const red = reduceNumber(sum, false); // Attitude is traditionally 1-9
   return {
@@ -324,10 +371,10 @@ export function calculateBalanceNumber(name, system = "pythagorean") {
  * Calculate the 4 Challenge Numbers
  */
 export function calculateChallengeNumbers(birthDateStr) {
-  const [yearStr, monthStr, dayStr] = birthDateStr.split("-");
-  const month = reduceNumber(parseInt(monthStr, 10), false).value;
-  const day = reduceNumber(parseInt(dayStr, 10), false).value;
-  const year = reduceNumber(parseInt(yearStr, 10), false).value;
+  const { year: yrNum, month: moNum, day: dyNum } = parseFlexibleDate(birthDateStr);
+  const month = reduceNumber(moNum, false).value;
+  const day = reduceNumber(dyNum, false).value;
+  const year = reduceNumber(yrNum, false).value;
 
   const challenge1 = Math.abs(month - day);
   const challenge2 = Math.abs(day - year);
@@ -346,10 +393,10 @@ export function calculateChallengeNumbers(birthDateStr) {
  * Calculate the 4 Pinnacle Cycles & Age Brackets
  */
 export function calculatePinnacles(birthDateStr, lifePathBase) {
-  const [yearStr, monthStr, dayStr] = birthDateStr.split("-");
-  const month = reduceNumber(parseInt(monthStr, 10), false).value;
-  const day = reduceNumber(parseInt(dayStr, 10), false).value;
-  const year = reduceNumber(parseInt(yearStr, 10), false).value;
+  const { year: yrNum, month: moNum, day: dyNum } = parseFlexibleDate(birthDateStr);
+  const month = reduceNumber(moNum, false).value;
+  const day = reduceNumber(dyNum, false).value;
+  const year = reduceNumber(yrNum, false).value;
 
   const p1 = reduceNumber(month + day).value;
   const p2 = reduceNumber(day + year).value;

@@ -5,6 +5,7 @@
  */
 
 import { findCityCoordinates } from "./data/cities.js";
+import { parseFlexibleDate } from "./numerology.js";
 
 export const ZODIAC_SIGNS = [
   { name: "Aries", symbol: "♈", element: "Fire", modality: "Cardinal", ruler: "Mars", start: [3, 21], end: [4, 19], degreeOffset: 0 },
@@ -54,9 +55,7 @@ export function calculateJulianDay(year, month, day, decimalHours = 12) {
  * Determine Sun Sign based on birth month and day
  */
 export function calculateSunSign(birthDateStr) {
-  const [, monthStr, dayStr] = birthDateStr.split("-");
-  const month = parseInt(monthStr, 10);
-  const day = parseInt(dayStr, 10);
+  const { month, day } = parseFlexibleDate(birthDateStr);
 
   for (const sign of ZODIAC_SIGNS) {
     const [sM, sD] = sign.start;
@@ -223,14 +222,11 @@ export function calculateElementalBalance(sunSign, moonData, ascendantData, nume
  * Generate Complete Astrological Profile
  */
 export function calculateAstrologyProfile(birthDateStr, birthTimeStr, birthPlaceStr, numerologyProfile) {
-  const [yearStr, monthStr, dayStr] = birthDateStr.split("-");
-  const year = parseInt(yearStr, 10);
-  const month = parseInt(monthStr, 10);
-  const day = parseInt(dayStr, 10);
+  const { year, month, day, iso } = parseFlexibleDate(birthDateStr);
 
-  const sunSign = calculateSunSign(birthDateStr);
+  const sunSign = calculateSunSign(iso);
   const moonData = calculateMoonSign(year, month, day);
-  const ascendantData = calculateAscendant(birthDateStr, birthTimeStr, birthPlaceStr);
+  const ascendantData = calculateAscendant(iso, birthTimeStr, birthPlaceStr);
   const elemental = calculateElementalBalance(sunSign, moonData, ascendantData, numerologyProfile);
 
   return {

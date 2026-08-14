@@ -3,7 +3,7 @@
  * Bridge Numbers & Three Life Epochs Calculation Engine.
  */
 
-import { reduceNumber, sumDigits, analyzeNameLetters } from "./numerology.js";
+import { reduceNumber, sumDigits, analyzeNameLetters, parseFlexibleDate } from "./numerology.js";
 
 /**
  * Lo Shu Grid Definition (Classical 3x3 Hermetic/Chinese Magic Square)
@@ -252,10 +252,7 @@ export function calculateBridgeNumbers(lifePathVal, destinyVal, soulUrgeVal, per
  * Calculate the Three Major Life Period Cycles (Epochs)
  */
 export function calculateThreeLifePeriods(birthDateStr, lifePathVal) {
-  const [yearStr, monthStr, dayStr] = birthDateStr.split("-");
-  const month = parseInt(monthStr, 10);
-  const day = parseInt(dayStr, 10);
-  const year = parseInt(yearStr, 10);
+  const { year, month, day } = parseFlexibleDate(birthDateStr);
 
   const p1 = reduceNumber(month).value; // 1st Period: Month
   const p2 = reduceNumber(day).value;   // 2nd Period: Day
