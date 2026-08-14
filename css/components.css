@@ -1,0 +1,1326 @@
+/* ==========================================================================
+   AETHERIA DESIGN SYSTEM - COMPONENTS
+   Forms, Cards, Badges, Modals, Progress Wheels, Data Tables
+   ========================================================================== */
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Primary Gold Button */
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold-primary), var(--gold-deep));
+  color: hsl(222, 30%, 8%);
+  font-weight: 700;
+  border: 1px solid hsl(42, 70%, 65%);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--gold-hover), var(--gold-primary));
+  box-shadow: 0 6px 24px hsla(42, 70%, 50%, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary / Ghost Surface Buttons */
+.btn-secondary {
+  background: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--gold-muted);
+  color: var(--gold-primary);
+}
+
+.btn-gold-ghost {
+  background: transparent;
+  color: var(--gold-primary);
+  border: 1px solid var(--border-gold-subtle);
+}
+
+.btn-gold-ghost:hover {
+  background: hsla(42, 60%, 50%, 0.1);
+  border-color: var(--gold-primary);
+}
+
+.btn-sm {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
+}
+
+.btn-lg {
+  padding: 0.85rem 1.85rem;
+  font-size: 1rem;
+}
+
+/* ==========================================================================
+   INPUT CONSOLE / HERO FORM
+   ========================================================================== */
+
+.console-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.console-card::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 260px; height: 260px;
+  background: radial-gradient(circle at top right, hsla(42, 60%, 50%, 0.08), transparent 70%);
+  pointer-events: none;
+}
+
+.console-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.console-header h2 {
+  margin-bottom: 0.2rem;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.preset-selector-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.preset-selector-group label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: var(--tracking-wide);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-group label span.hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.form-control,
+.form-select {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  padding: 0.7rem 0.95rem;
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 0 3px hsla(42, 65%, 60%, 0.15);
+  background: var(--bg-surface);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.form-row-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.form-footer-actions {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.form-quick-options {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  accent-color: var(--gold-primary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   GLYPHS & NUMBER BADGES
+   ========================================================================== */
+
+.number-glyph-box {
+  width: 58px;
+  height: 58px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, hsl(222, 22%, 18%), hsl(222, 25%, 11%));
+  border: 1px solid var(--border-gold-subtle);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--gold-primary);
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+  position: relative;
+  transition: all var(--transition-smooth);
+}
+
+.number-glyph-box.master {
+  border-color: var(--gold-primary);
+  color: hsl(42, 85%, 68%);
+  box-shadow: var(--shadow-gold);
+}
+
+.number-glyph-box.master::before {
+  content: 'MASTER';
+  position: absolute;
+  top: -7px;
+  font-size: 0.52rem;
+  font-family: var(--font-sans);
+  letter-spacing: var(--tracking-wider);
+  background: var(--gold-deep);
+  color: #fff;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.number-glyph-sm {
+  width: 38px;
+  height: 38px;
+  font-size: 1.15rem;
+  border-radius: var(--radius-md);
+}
+
+.number-glyph-lg {
+  width: 80px;
+  height: 80px;
+  font-size: 2.5rem;
+  border-radius: var(--radius-xl);
+}
+
+/* ==========================================================================
+   CARDS & GRIDS (CORE BLUEPRINT)
+   ========================================================================== */
+
+.blueprint-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.blueprint-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.65rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+  position: relative;
+}
+
+.blueprint-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-gold-subtle);
+  box-shadow: var(--shadow-md);
+}
+
+.blueprint-card.highlight {
+  border-color: var(--border-gold);
+  background: linear-gradient(180deg, hsl(222, 20%, 15%), var(--bg-surface));
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.card-meta {
+  flex: 1;
+}
+
+.card-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--gold-muted);
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.card-meta h3 {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.card-archetype {
+  font-size: 0.84rem;
+  color: var(--gold-primary);
+  font-family: var(--font-serif);
+  font-weight: 600;
+}
+
+.card-body p {
+  font-size: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+
+.card-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.75rem 0;
+}
+
+.card-pill {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.card-footer {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-inspect {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.btn-inspect:hover {
+  color: var(--gold-primary);
+}
+
+/* ==========================================================================
+   ADVANCED / KARMIC ELEMENTS
+   ========================================================================== */
+
+.karmic-banner {
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  border: 1px solid var(--border-subtle);
+}
+
+.karmic-banner.clean {
+  background: linear-gradient(135deg, hsla(150, 40%, 15%, 0.5), var(--bg-surface));
+  border-color: hsla(150, 40%, 40%, 0.4);
+}
+
+.karmic-banner.debt {
+  background: linear-gradient(135deg, hsla(42, 60%, 18%, 0.5), var(--bg-surface));
+  border-color: var(--border-gold);
+}
+
+.karmic-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.karmic-banner.clean .karmic-icon-box {
+  background: hsla(150, 50%, 40%, 0.2);
+  color: var(--stellar-emerald);
+}
+
+.karmic-banner.debt .karmic-icon-box {
+  background: hsla(42, 70%, 50%, 0.2);
+  color: var(--gold-primary);
+}
+
+.karmic-content h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.35rem;
+}
+
+.karmic-debt-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-top: 1rem;
+}
+
+.karmic-debt-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.karmic-debt-header strong {
+  color: var(--gold-primary);
+  font-size: 1.05rem;
+  font-family: var(--font-serif);
+}
+
+/* 4 Challenges Timeline */
+.challenges-grid,
+.pinnacles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.challenge-item,
+.pinnacle-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  position: relative;
+}
+
+.challenge-item.main-challenge {
+  border-color: var(--border-gold);
+  background: linear-gradient(180deg, hsl(222, 20%, 15%), var(--bg-surface));
+}
+
+.challenge-item-header,
+.pinnacle-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.challenge-label,
+.pinnacle-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   NAME SHIFT ANALYSIS
+   ========================================================================== */
+
+.comparison-table-wrapper {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.comparison-table th {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.comparison-table td.number-cell {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gold-primary);
+}
+
+.shift-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.shift-badge.changed {
+  background: hsla(42, 60%, 50%, 0.15);
+  color: var(--gold-primary);
+  border: 1px solid var(--border-gold-subtle);
+}
+
+.shift-badge.steady {
+  background: var(--bg-input);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+/* ==========================================================================
+   TIMING & FORECASTING
+   ========================================================================== */
+
+.forecast-hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.forecast-hero-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.forecast-hero-card.featured {
+  background: linear-gradient(135deg, hsl(222, 22%, 16%), hsl(222, 20%, 12%));
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-gold);
+}
+
+.epicycle-tracker {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 0.4rem;
+  margin: 1.5rem 0;
+}
+
+.epicycle-step {
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.epicycle-step.active {
+  background: var(--gold-primary);
+  color: hsl(222, 30%, 8%);
+  border-color: var(--gold-hover);
+  box-shadow: var(--shadow-gold);
+  transform: scale(1.08);
+  z-index: 2;
+}
+
+.epicycle-step.past {
+  border-color: var(--border-gold-subtle);
+  color: var(--gold-muted);
+}
+
+.transit-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.transit-month-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  transition: all var(--transition-fast);
+}
+
+.transit-month-card:hover {
+  border-color: var(--border-gold-subtle);
+}
+
+.transit-month-card.current-month {
+  border-color: var(--border-gold);
+  background: linear-gradient(180deg, hsl(222, 22%, 16%), var(--bg-surface));
+}
+
+.transit-month-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+/* ==========================================================================
+   ASTROLOGY & ELEMENTAL SYNTHESIS
+   ========================================================================== */
+
+.astro-synthesis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.astro-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+}
+
+.astro-glyph-hero {
+  font-size: 2.5rem;
+  color: var(--gold-primary);
+  margin-bottom: 0.5rem;
+}
+
+.elemental-meter-group {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.elemental-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.elemental-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.elemental-track {
+  height: 10px;
+  background: var(--bg-input);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.elemental-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 800ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.elemental-fill.fire { background: linear-gradient(90deg, #E65C5C, #E69D5C); }
+.elemental-fill.earth { background: linear-gradient(90deg, #5CAE81, #84C59B); }
+.elemental-fill.air { background: linear-gradient(90deg, #5CB4E6, #8CD0E6); }
+.elemental-fill.water { background: linear-gradient(90deg, #5C7AE6, #8C9EE6); }
+
+.mandate-parchment {
+  background: linear-gradient(135deg, hsl(222, 22%, 15%), hsl(222, 24%, 11%));
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  margin-top: 2rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.mandate-parchment h3 {
+  font-size: 1.35rem;
+  color: var(--gold-primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mandate-text {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--text-primary);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   MODALS & DRAWERS
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: hsla(222, 35%, 6%, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: none;
+  place-items: center;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+}
+
+.modal-backdrop.active {
+  display: grid;
+  opacity: 1;
+}
+
+.modal-window {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-xl);
+  max-width: 680px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 2.25rem;
+  box-shadow: var(--shadow-lg);
+  transform: scale(0.95);
+  transition: transform var(--transition-bounce);
+  position: relative;
+}
+
+.modal-backdrop.active .modal-window {
+  transform: scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  display: grid;
+  place-items: center;
+  transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  background: var(--bg-surface-elevated);
+  color: var(--text-primary);
+}
+
+/* Step-by-Step Letter Grid in Modal */
+.letter-breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.letter-breakdown-table th,
+.letter-breakdown-table td {
+  padding: 0.6rem;
+  text-align: center;
+  border: 1px solid var(--border-subtle);
+  font-size: 0.88rem;
+}
+
+.letter-breakdown-table th {
+  background: var(--bg-input);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATION
+   ========================================================================== */
+
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.toast-item {
+  pointer-events: auto;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-gold);
+  color: var(--text-primary);
+  padding: 0.85rem 1.35rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.88rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  animation: slideToast 300ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+.toast-item.toast-success {
+  border-color: hsl(150, 50%, 45%);
+  background: linear-gradient(135deg, hsl(222, 22%, 18%), hsl(150, 40%, 12%));
+  color: hsl(150, 60%, 85%);
+}
+
+.toast-item.toast-error {
+  border-color: hsl(355, 60%, 55%);
+  background: linear-gradient(135deg, hsl(222, 22%, 18%), hsl(355, 40%, 14%));
+  color: hsl(355, 75%, 90%);
+}
+
+.toast-item.toast-info {
+  border-color: var(--border-gold);
+  background: linear-gradient(135deg, hsl(222, 22%, 18%), hsl(42, 40%, 14%));
+  color: var(--text-primary);
+}
+
+@keyframes slideToast {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   LO SHU MAGIC SQUARE & ARROWS
+   ========================================================================== */
+
+.loshu-container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.loshu-grid-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.loshu-table {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-medium);
+}
+
+.loshu-table td {
+  width: 33.333%;
+  height: 33.333%;
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+  vertical-align: middle;
+  padding: 0.5rem;
+  transition: all var(--transition-fast);
+}
+
+.loshu-cell-num {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.loshu-table td.present {
+  background: hsla(42, 60%, 50%, 0.12);
+  border-color: var(--border-gold);
+}
+
+.loshu-table td.present .loshu-cell-num {
+  color: var(--gold-primary);
+  text-shadow: 0 0 10px hsla(42, 65%, 60%, 0.35);
+}
+
+.loshu-count-badge {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--gold-muted);
+  font-family: var(--font-sans);
+  margin-top: 2px;
+}
+
+.arrows-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.arrow-item-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.15rem;
+  border-left: 4px solid var(--gold-primary);
+}
+
+.arrow-item-card.loss {
+  border-left-color: var(--stellar-crimson);
+}
+
+/* ==========================================================================
+   SOLFEGGIO SOUND SYNTHESIZER
+   ========================================================================== */
+
+.solfeggio-card {
+  background: linear-gradient(135deg, hsl(222, 22%, 16%), hsl(222, 25%, 11%));
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 2rem;
+}
+
+.solfeggio-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  background: var(--bg-input);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-play-tone {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--gold-primary), var(--gold-deep));
+  color: hsl(222, 30%, 8%);
+  border: none;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-gold);
+  transition: transform var(--transition-bounce), box-shadow var(--transition-fast);
+}
+
+.btn-play-tone:hover {
+  transform: scale(1.08);
+}
+
+.btn-play-tone.active {
+  background: var(--stellar-emerald);
+  box-shadow: 0 0 20px hsla(150, 60%, 50%, 0.4);
+}
+
+.frequency-pill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+
+.freq-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--text-primary);
+}
+
+.freq-btn:hover {
+  border-color: var(--border-gold-subtle);
+  background: var(--bg-surface-elevated);
+}
+
+.freq-btn.active {
+  border-color: var(--gold-primary);
+  background: linear-gradient(135deg, hsl(222, 20%, 18%), hsl(42, 40%, 15%));
+  box-shadow: var(--shadow-sm);
+}
+
+.wave-animation {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+}
+
+.wave-bar {
+  width: 4px;
+  height: 6px;
+  background: var(--gold-primary);
+  border-radius: 2px;
+  transition: height 150ms ease;
+}
+
+.btn-play-tone.active ~ .wave-animation .wave-bar {
+  animation: soundWave 800ms ease-in-out infinite alternate;
+}
+
+.wave-bar:nth-child(2) { animation-delay: 150ms; }
+.wave-bar:nth-child(3) { animation-delay: 300ms; }
+.wave-bar:nth-child(4) { animation-delay: 450ms; }
+.wave-bar:nth-child(5) { animation-delay: 600ms; }
+
+@keyframes soundWave {
+  0% { height: 6px; }
+  100% { height: 24px; }
+}
+
+/* ==========================================================================
+   PLANETARY HOURS & CLOCK
+   ========================================================================== */
+
+.planetary-hours-banner {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.planetary-hours-schedule {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.hour-step-badge {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem;
+  font-size: 0.74rem;
+  text-align: center;
+}
+
+.hour-step-badge.current {
+  border-color: var(--gold-primary);
+  background: linear-gradient(135deg, hsl(222, 22%, 18%), hsl(42, 40%, 15%));
+  color: var(--gold-primary);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   ESOTERIC ORACLE CHAT CONSOLE
+   ========================================================================== */
+
+.oracle-console-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 2rem;
+}
+
+.quick-prompts-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0 1.25rem 0;
+}
+
+.quick-prompt-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.quick-prompt-btn:hover {
+  border-color: var(--gold-primary);
+  color: var(--gold-primary);
+  background: var(--bg-surface-elevated);
+}
+
+.oracle-response-card {
+  background: linear-gradient(135deg, hsl(222, 22%, 15%), hsl(222, 24%, 11%));
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-top: 1.5rem;
+/* ==========================================================================
+   USER AUTHENTICATION & ACCOUNT PROFILE MANAGER
+   ========================================================================== */
+
+.user-account-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.85rem 0.35rem 0.4rem;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.user-account-btn:hover {
+  border-color: var(--gold-primary);
+  background: var(--bg-surface-elevated);
+  box-shadow: var(--shadow-gold);
+}
+
+.user-sigil-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--gold-primary), var(--gold-deep));
+  color: hsl(222, 30%, 8%);
+  font-size: 0.95rem;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.user-role-badge {
+  font-size: 0.65rem;
+  padding: 0.15rem 0.45rem;
+  background: hsla(42, 60%, 50%, 0.15);
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: var(--radius-full);
+  color: var(--gold-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.auth-modal-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 1.5rem;
+}
+
+.auth-modal-tab {
+  flex: 1;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.auth-modal-tab.active {
+  color: var(--gold-primary);
+  border-bottom-color: var(--gold-primary);
+}
+
+.sigil-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin: 0.5rem 0 1.25rem 0;
+}
+
+.sigil-choice-btn {
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  font-size: 1.25rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.sigil-choice-btn:hover {
+  border-color: var(--border-gold);
+  color: var(--gold-primary);
+  background: var(--bg-surface-elevated);
+}
+
+.sigil-choice-btn.selected {
+  border-color: var(--gold-primary);
+  background: linear-gradient(135deg, hsl(222, 22%, 18%), hsl(42, 40%, 15%));
+  color: var(--gold-primary);
+  box-shadow: 0 0 10px hsla(42, 65%, 60%, 0.3);
+}
+
+.vault-stats-card {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+
+@media (max-width: 960px) {
+  .loshu-container {
+    grid-template-columns: 1fr;
+  }
+  .forecast-hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .epicycle-tracker {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .console-card {
+    padding: 1.25rem;
+  }
+  .form-row-duo {
+    grid-template-columns: 1fr;
+  }
+  .blueprint-grid {
+    grid-template-columns: 1fr;
+  }
+  .modal-window {
+    padding: 1.5rem;
+  }
+}
